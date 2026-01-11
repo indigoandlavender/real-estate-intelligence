@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import TrustGauge from './TrustGauge';
 import InvestorPDF from './InvestorPDF';
+import ExpertTips from './ExpertTips';
 
 // ============================================
 // THE FORENSIC LOGIC TABLE
@@ -937,7 +939,13 @@ export default function TrustCalculator() {
               <h1 className="text-lg font-bold text-amber-500">TIFORT</h1>
               <p className="text-[10px] text-gray-500 tracking-wider">THE WOMAN WHO KNOWS</p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Link
+                href="/glossary"
+                className="px-3 py-1.5 bg-gray-700 text-gray-300 text-xs font-medium rounded-lg hover:bg-gray-600"
+              >
+                Glossary
+              </Link>
               <button
                 onClick={() => setShowPDF(true)}
                 className="px-3 py-1.5 bg-amber-600 text-white text-xs font-medium rounded-lg hover:bg-amber-500"
@@ -1000,6 +1008,24 @@ export default function TrustCalculator() {
         {step === 1 && <StructuralStep data={formData} onChange={handleChange} breakdown={breakdown} />}
         {step === 2 && <MarketStep data={formData} onChange={handleChange} breakdown={breakdown} />}
         {step === 3 && <FinancialStep data={formData} onChange={handleChange} breakdown={breakdown} financials={financials} />}
+
+        {/* Expert Tips Sidebar */}
+        <div className="mt-6">
+          <ExpertTips
+            section={step === 0 ? 'legal' : step === 1 ? 'structural' : step === 2 ? 'market' : 'financial'}
+            data={{
+              titleType: formData.titleType,
+              heirCount: formData.heirCount,
+              vnaStatus: formData.vnaStatus,
+              pillarTilt: formData.pillarTilt,
+              humidity: formData.humidity,
+              seismicChaining: formData.seismicChaining,
+              alleyWidthM: formData.alleyWidthM,
+              askingPrice: formData.askingPrice,
+              surfaceSqm: formData.surfaceSqm,
+            }}
+          />
+        </div>
       </div>
 
       {/* Bottom Navigation */}
