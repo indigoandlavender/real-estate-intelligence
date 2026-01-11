@@ -209,7 +209,7 @@ export interface StreetIntelligenceReport {
 
 // Generate official-looking audit number
 export function generateAuditNumber(): string {
-  const prefix = 'TFT';
+  const prefix = 'MLK';
   const year = new Date().getFullYear();
   const month = String(new Date().getMonth() + 1).padStart(2, '0');
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();

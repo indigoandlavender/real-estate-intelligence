@@ -12,7 +12,7 @@ const PROTECTED_PAGE_ROUTES = [
 ];
 
 // Valid access tokens
-const VALID_TOKENS = ['TIFORT2026', 'FORENSIC_VIEWER_2026'];
+const VALID_TOKENS = ['MELKIA2026', 'FORENSIC_VIEWER_2026'];
 
 function validateToken(token: string | null | undefined): boolean {
   if (!token) return false;
@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
         {
           error: 'Unauthorized',
           message: 'Valid forensic access token required.',
-          instructions: 'Set cookie "forensic-access=TIFORT2026" or header "x-forensic-token: TIFORT2026"',
+          instructions: 'Set cookie "forensic-access=MELKIA2026" or header "x-forensic-token: MELKIA2026"',
         },
         { status: 401 }
       );

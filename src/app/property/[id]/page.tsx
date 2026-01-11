@@ -180,7 +180,7 @@ export default function PropertyPage() {
   const handleAccessRequest = (e: React.FormEvent) => {
     e.preventDefault();
     // Simple password check (in production, this would be an API call)
-    if (accessCode === 'TIFORT2026') {
+    if (accessCode === 'Melkia 2.02026') {
       document.cookie = 'forensic-access=verified; max-age=86400; path=/';
       setHasAccess(true);
       setShowAccessModal(false);
@@ -254,7 +254,7 @@ export default function PropertyPage() {
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
           <Link href="/" className="font-display text-xl tracking-[0.2em]">
-            TIFORT
+            Melkia 2.0
           </Link>
           <Link href="/" className="text-sm tracking-widest text-gray-400 hover:text-white">
             Back to Collection
@@ -526,7 +526,7 @@ export default function PropertyPage() {
       <footer className="py-12 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-8 text-center">
           <p className="text-xs text-gray-600 tracking-widest">
-            TIFORT · LAKSOUR REAL ESTATE · MEDINA INVESTMENT
+            Melkia 2.0 · LAKSOUR REAL ESTATE · MEDINA INVESTMENT
           </p>
         </div>
       </footer>

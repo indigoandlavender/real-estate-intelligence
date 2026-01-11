@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tifort.vercel.app';
+  const baseUrl = 'https://melkia.vercel.app';
 
   // Static pages
   const staticPages = [

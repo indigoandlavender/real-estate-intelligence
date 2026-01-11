@@ -161,7 +161,7 @@ const FORENSIC_DATA: Record<string, ForensicData> = {
 };
 
 // Valid access tokens (in production, use a proper auth system)
-const VALID_TOKENS = ['TIFORT2026', 'FORENSIC_VIEWER_2026'];
+const VALID_TOKENS = ['MELKIA2026', 'FORENSIC_VIEWER_2026'];
 
 function validateToken(token: string | null): boolean {
   if (!token) return false;

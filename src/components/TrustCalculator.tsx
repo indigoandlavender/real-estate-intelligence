@@ -772,7 +772,7 @@ export default function TrustCalculator() {
         <div className="max-w-xl mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-display text-xl tracking-widest">TIFORT</h1>
+              <h1 className="font-display text-xl tracking-widest">Melkia 2.0</h1>
             </div>
             <div className="flex items-center gap-4">
               <Link href="/glossary" className="text-xs uppercase tracking-widest text-gray-500 hover:text-black">

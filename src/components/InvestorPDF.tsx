@@ -74,7 +74,7 @@ export default function InvestorPDF({ data, onClose }: InvestorPDFProps) {
                 <div className="text-sm text-gray-500 mt-1">{data.neighborhood}, Marrakech</div>
               </div>
               <div className="text-right">
-                <div className="text-[10px] uppercase tracking-[0.2em] text-gray-400">TIFORT</div>
+                <div className="text-[10px] uppercase tracking-[0.2em] text-gray-400">Melkia 2.0</div>
                 <div className="text-xs text-gray-500 mt-2">
                   {new Date().toLocaleDateString('fr-FR')}
                 </div>
@@ -215,8 +215,8 @@ export default function InvestorPDF({ data, onClose }: InvestorPDFProps) {
             </div>
 
             <div className="mt-4 flex justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest">
-              <span>TIFORT</span>
-              <span>tifort.vercel.app</span>
+              <span>Melkia 2.0</span>
+              <span>melkia.vercel.app</span>
             </div>
           </div>
         </div>

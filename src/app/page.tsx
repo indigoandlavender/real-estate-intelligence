@@ -99,7 +99,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
           <Link href="/" className="font-display text-xl tracking-[0.2em]">
-            TIFORT
+            Melkia 2.0
           </Link>
           <nav className="flex items-center gap-8">
             <Link href="#collection" className="text-sm tracking-widest text-gray-400 hover:text-white transition-colors">
@@ -371,7 +371,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-display text-lg tracking-[0.2em]">TIFORT</p>
+              <p className="font-display text-lg tracking-[0.2em]">Melkia 2.0</p>
               <p className="text-xs text-gray-600 mt-1 tracking-widest">
                 LAKSOUR REAL ESTATE · MEDINA INVESTMENT
               </p>

@@ -16,8 +16,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "TIFORT - Laksour Real Estate Investment | Marrakech Medina",
-    template: "%s | TIFORT",
+    default: "Melkia 2.0 - Laksour Real Estate Investment | Marrakech Medina",
+    template: "%s | Melkia 2.0",
   },
   description: "Premier Medina investment platform. Verified riads and historic properties in Laksour, Mouassine, and Kasbah. World Cup 2030 certified opportunities.",
   keywords: [
@@ -33,23 +33,23 @@ export const metadata: Metadata = {
     "Morocco real estate",
   ],
   openGraph: {
-    title: "TIFORT - The Future of Historic Investment in Marrakech",
+    title: "Melkia 2.0 - The Future of Historic Investment in Marrakech",
     description: "Premier Medina investment platform. Verified riads in Laksour, Mouassine, and Kasbah. World Cup 2030 certified.",
-    url: "https://tifort.vercel.app",
-    siteName: "TIFORT",
+    url: "https://melkia.vercel.app",
+    siteName: "Melkia 2.0",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "TIFORT - Laksour Real Estate Investment",
+    title: "Melkia 2.0 - Laksour Real Estate Investment",
     description: "Premier Medina investment platform. World Cup 2030 certified opportunities.",
   },
   icons: {
     icon: "/favicon.svg",
   },
   alternates: {
-    canonical: "https://tifort.vercel.app",
+    canonical: "https://melkia.vercel.app",
   },
 };
 
