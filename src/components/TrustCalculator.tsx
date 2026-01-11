@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import TrustGauge from './TrustGauge';
 import InvestorPDF from './InvestorPDF';
 import ExpertTips from './ExpertTips';
+import MedinaZoningDecoder from './MedinaZoningDecoder';
+import { MedinaZoningAssessment } from '@/types/medina';
 
 // ============================================
 // THE FORENSIC LOGIC TABLE
@@ -693,6 +695,9 @@ export default function TrustCalculator() {
   const [step, setStep] = useState(0);
   const [showPDF, setShowPDF] = useState(false);
   const [propertyName, setPropertyName] = useState('');
+  const [isMedinaProperty, setIsMedinaProperty] = useState(true);
+  const [medinaZoningScore, setMedinaZoningScore] = useState(100);
+  const [medinaAssessment, setMedinaAssessment] = useState<MedinaZoningAssessment | null>(null);
   const [formData, setFormData] = useState<FormData>({
     titleType: 'unknown',
     heirCount: 1,
@@ -719,12 +724,26 @@ export default function TrustCalculator() {
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 
-  const steps = ['Legal', 'Structure', 'Market', 'Yield'];
+  const handleMedinaZoningChange = useCallback((assessment: MedinaZoningAssessment, score: number) => {
+    setMedinaAssessment(assessment);
+    setMedinaZoningScore(score);
+  }, []);
+
+  // Adjust trust score with Medina zoning impact
+  const adjustedTrustScore = useMemo(() => {
+    if (!isMedinaProperty) return breakdown.total;
+    // Blend the scores: 70% base trust, 30% zoning compliance
+    return Math.round(breakdown.total * 0.7 + medinaZoningScore * 0.3);
+  }, [breakdown.total, medinaZoningScore, isMedinaProperty]);
+
+  const steps = isMedinaProperty
+    ? ['Legal', 'Zoning', 'Structure', 'Market', 'Yield']
+    : ['Legal', 'Structure', 'Market', 'Yield'];
 
   const pdfData = {
     propertyName: propertyName || `Riad ${formData.surfaceSqm}m²`,
     neighborhood: 'Laksour',
-    trustScore: breakdown.total,
+    trustScore: adjustedTrustScore,
     netYield: financials.netYield,
     investmentGrade: financials.investmentGrade,
     titleType: formData.titleType,
@@ -783,8 +802,28 @@ export default function TrustCalculator() {
         />
       </div>
 
-      <div className="max-w-xl mx-auto px-6 py-12">
-        <TrustGauge score={breakdown.total} />
+      <div className="max-w-xl mx-auto px-6 py-8">
+        {/* Medina Property Toggle */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <span className={`text-xs uppercase tracking-widest ${!isMedinaProperty ? 'text-black' : 'text-gray-400'}`}>
+            Outside Medina
+          </span>
+          <button
+            onClick={() => setIsMedinaProperty(!isMedinaProperty)}
+            className={`w-14 h-7 rounded-full transition-all ${isMedinaProperty ? 'bg-black' : 'bg-gray-300'}`}
+          >
+            <div className={`w-5 h-5 rounded-full bg-white transition-all ${isMedinaProperty ? 'ml-8' : 'ml-1'}`} />
+          </button>
+          <span className={`text-xs uppercase tracking-widest ${isMedinaProperty ? 'text-black' : 'text-gray-400'}`}>
+            Medina
+          </span>
+        </div>
+        <TrustGauge score={adjustedTrustScore} />
+        {isMedinaProperty && medinaZoningScore < 70 && (
+          <div className="mt-4 text-center text-xs text-amber-600">
+            Zoning compliance affecting score ({medinaZoningScore}/100)
+          </div>
+        )}
       </div>
 
       <div className="max-w-xl mx-auto px-6 mb-10">
@@ -807,13 +846,27 @@ export default function TrustCalculator() {
 
       <div className="max-w-xl mx-auto px-6 pb-40">
         {step === 0 && <LegalStep data={formData} onChange={handleChange} breakdown={breakdown} />}
-        {step === 1 && <StructuralStep data={formData} onChange={handleChange} breakdown={breakdown} />}
-        {step === 2 && <MarketStep data={formData} onChange={handleChange} breakdown={breakdown} />}
-        {step === 3 && <FinancialStep data={formData} onChange={handleChange} breakdown={breakdown} financials={financials} />}
+        {isMedinaProperty && step === 1 && (
+          <div className="space-y-6">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-2xl tracking-wide">Medina Zoning</h2>
+              <p className="text-sm text-gray-500 mt-2">PAV 2026 Compliance</p>
+            </div>
+            <MedinaZoningDecoder onChange={handleMedinaZoningChange} darkMode={false} />
+          </div>
+        )}
+        {(isMedinaProperty ? step === 2 : step === 1) && <StructuralStep data={formData} onChange={handleChange} breakdown={breakdown} />}
+        {(isMedinaProperty ? step === 3 : step === 2) && <MarketStep data={formData} onChange={handleChange} breakdown={breakdown} />}
+        {(isMedinaProperty ? step === 4 : step === 3) && <FinancialStep data={formData} onChange={handleChange} breakdown={breakdown} financials={financials} />}
 
         <div className="mt-12">
           <ExpertTips
-            section={step === 0 ? 'legal' : step === 1 ? 'structural' : step === 2 ? 'market' : 'financial'}
+            section={
+              step === 0 ? 'legal' :
+              (isMedinaProperty && step === 1) ? 'legal' :
+              (isMedinaProperty ? step === 2 : step === 1) ? 'structural' :
+              (isMedinaProperty ? step === 3 : step === 2) ? 'market' : 'financial'
+            }
             data={{
               titleType: formData.titleType,
               heirCount: formData.heirCount,
