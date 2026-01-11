@@ -1,10 +1,5 @@
 'use client';
 
-// ============================================
-// THE INTELLIGENCE LAYER
-// "The Woman Who Knows" Expert Tips
-// ============================================
-
 interface ExpertTipsProps {
   section: 'legal' | 'structural' | 'market' | 'financial';
   data: {
@@ -20,161 +15,138 @@ interface ExpertTipsProps {
   };
 }
 
-// Expert knowledge database - "The Adoul Logic"
 const EXPERT_TIPS = {
   legal: {
     title: 'Legal Intelligence',
-    icon: '⚖️',
     tips: [
       {
         id: 'certificat',
         title: 'Certificat de Non-Opposition',
-        content: 'MANDATORY: Request the "Certificat de Non-Opposition" from neighbors. Without it, construction permits can be blocked later.',
+        content: 'Request from neighbors before construction permits.',
         priority: 'high',
       },
       {
         id: 'lafif',
-        title: 'Lafif Verification (Melkia)',
-        content: 'For Melkia properties: Verify the "Lafif" document. Are all 12 witnesses still alive or reachable? Dead witnesses = administrative nightmare.',
+        title: 'Lafif Verification',
+        content: 'Verify all 12 witnesses are reachable. Dead witnesses cause delays.',
         priority: 'high',
         condition: (data: ExpertTipsProps['data']) => data.titleType === 'melkia',
       },
       {
         id: 'heirs',
         title: 'Heir Coordination',
-        content: 'Count the heirs carefully. If >5, expect a 6-month delay minimum. Each heir must sign—one holdout can block the entire sale.',
+        content: 'Each heir must sign. One holdout blocks the sale.',
         priority: 'medium',
         condition: (data: ExpertTipsProps['data']) => (data.heirCount || 0) > 3,
       },
       {
         id: 'power-attorney',
-        title: '2026 Alert: Electronic Register',
-        content: 'If seller is not physically present, check the National Electronic Register for Powers of Attorney (2026 requirement). Fake procurations are common.',
+        title: '2026 Electronic Register',
+        content: 'Verify Powers of Attorney via the National Digital Portal.',
         priority: 'high',
       },
       {
         id: 'vna-timeline',
         title: 'VNA Timeline',
-        content: 'VNA (Vocation Non-Agricole) approval takes 3-6 months. Budget this into your acquisition timeline. No VNA = no foreign ownership transfer.',
+        content: 'Approval takes 3-6 months. No VNA = no foreign transfer.',
         priority: 'medium',
         condition: (data: ExpertTipsProps['data']) => !data.vnaStatus,
       },
     ],
   },
   structural: {
-    title: 'Builder\'s Intelligence',
-    icon: '🏛️',
+    title: 'Structural Intelligence',
     tips: [
       {
         id: 'pillar-subsidence',
-        title: 'Foundation Subsidence Risk',
-        content: 'HIGH RISK: Pillar tilt >2° indicates active foundation movement. Consult a structural engineer before proceeding. Do NOT trust verbal assurances.',
+        title: 'Foundation Subsidence',
+        content: 'Pillar tilt >2° indicates active movement. Consult engineer.',
         priority: 'critical',
         condition: (data: ExpertTipsProps['data']) => (data.pillarTilt || 0) > 2,
       },
       {
         id: 'tabia-humidity',
         title: 'Tabia Wall Treatment',
-        content: 'Dampness >6/10 = Tabia degradation. Budget 2,500 DH/m² extra for specialized lime treatment (chaux aérienne). Cement plaster will make it WORSE.',
+        content: 'Dampness >6/10 requires lime treatment. Never use cement.',
         priority: 'high',
         condition: (data: ExpertTipsProps['data']) => (data.humidity || 0) > 6,
       },
       {
         id: 'seismic-post-2023',
-        title: 'Post-2023 Seismic Requirements',
-        content: 'After the Al Haouz earthquake, seismic chaining is now scrutinized. Properties without it face insurance issues and resale difficulties.',
+        title: 'Post-2023 Seismic',
+        content: 'Properties without chaining face insurance issues.',
         priority: 'high',
         condition: (data: ExpertTipsProps['data']) => !data.seismicChaining,
       },
       {
         id: 'roof-check',
         title: 'Terrace Waterproofing',
-        content: 'Check the terrace during/after rain. Most "renovated" riads have waterproofing failures within 2 years. Budget 800 DH/m² for proper étanchéité.',
-        priority: 'medium',
-      },
-      {
-        id: 'shared-walls',
-        title: 'Neighbor Wall Assessment',
-        content: 'Shared walls in the Medina are common. If neighbor\'s house is leaning, YOUR wall will crack. Always inspect from BOTH sides.',
+        content: 'Most "renovated" riads fail within 2 years.',
         priority: 'medium',
       },
     ],
   },
   market: {
-    title: 'Location Intelligence',
-    icon: '📍',
+    title: 'Market Intelligence',
     tips: [
       {
         id: 'darb-width',
-        title: 'Darb Width = Labor Cost',
-        content: 'Can a mule or construction cart pass? If alley <1.5m, labor costs increase 20% minimum. All materials carried by hand = slow + expensive.',
+        title: 'Derb Width = Labor Cost',
+        content: 'Alley <1.5m increases labor costs 20% minimum.',
         priority: 'high',
         condition: (data: ExpertTipsProps['data']) => (data.alleyWidthM || 2) < 1.5,
       },
       {
         id: 'parking-distance',
-        title: 'Parking Reality Check',
-        content: 'Distance to parking affects both renovation logistics AND guest experience. >200m walk with luggage = bad reviews on Booking.com.',
+        title: 'Parking Reality',
+        content: '>200m walk with luggage = bad guest reviews.',
         priority: 'medium',
       },
       {
         id: 'price-benchmark',
         title: 'Laksour Benchmark',
-        content: 'Laksour 2026 benchmark: 18,000 DH/m². Below this = potential arbitrage. Above 25,000 = you\'re paying for "finished" premium.',
+        content: '2026: 18,000 MAD/m². Below = potential. Above 25,000 = premium.',
         priority: 'medium',
       },
       {
         id: 'wc2030',
-        title: 'World Cup 2030 Factor',
-        content: 'Properties <500m from new infrastructure (train station, stadium access) will appreciate 5%+ by 2030. Check the urban planning maps.',
+        title: 'World Cup 2030',
+        content: 'Properties <500m from new infrastructure appreciate 5%+.',
         priority: 'medium',
-      },
-      {
-        id: 'tourist-flow',
-        title: 'Tourist Flow Analysis',
-        content: 'Walk the derb at 10am and 6pm. Count tourists. High foot traffic = high visibility for your future Maison d\'Hôte.',
-        priority: 'low',
       },
     ],
   },
   financial: {
     title: 'Financial Intelligence',
-    icon: '💰',
     tips: [
       {
         id: 'closing-costs',
         title: '2026 Closing Costs',
-        content: 'Total: 7% of purchase price. Registration (4%) + Conservation (1.5%) + Notary (1%) + stamps. Non-negotiable. Budget it from day one.',
+        content: 'Total 7%: Registration 4% + Conservation 1.5% + Notary 1%.',
         priority: 'high',
       },
       {
         id: 'renovation-buffer',
-        title: 'Renovation Buffer Rule',
-        content: 'Always add 20% buffer to renovation estimates. In the Medina, you WILL find surprises behind the walls. No exceptions.',
+        title: 'Renovation Buffer',
+        content: 'Always add 20%. You will find surprises behind the walls.',
         priority: 'high',
       },
       {
-        id: 'ffe-budget',
-        title: 'FF&E Reality',
-        content: 'Furniture, Fixtures & Equipment: 12-15% of renovation cost. Moroccan artisan furniture is beautiful but delivery times are "Inshallah."',
-        priority: 'medium',
-      },
-      {
         id: 'occupancy-reality',
-        title: 'Occupancy Reality Check',
-        content: '65% is the market average. First year: expect 40-50% while building reviews. Don\'t model your ROI on 80% occupancy fantasies.',
+        title: 'Occupancy Reality',
+        content: 'Market average 65%. First year expect 40-50%.',
         priority: 'high',
       },
       {
         id: 'quitus-fiscal',
-        title: 'Quitus Fiscal (2026)',
-        content: 'Before closing, demand the Quitus Fiscal. This proves seller has no outstanding tax debts. New 2026 rule: debts transfer with property.',
+        title: 'Quitus Fiscal',
+        content: '2026: Tax debts transfer with property.',
         priority: 'critical',
       },
       {
         id: 'titre-arbitrage',
-        title: 'Melkia Arbitrage Strategy',
-        content: 'Buy Melkia at discount → Regularize to Titre (12-18 months) → Property becomes bankable at institutional 4.5% cap rate. This is the "Found Value."',
+        title: 'Melkia Arbitrage',
+        content: 'Buy Melkia, regularize to Titre, value at 4.5% cap rate.',
         priority: 'medium',
         condition: (data: ExpertTipsProps['data']) => data.titleType === 'melkia',
       },
@@ -185,75 +157,32 @@ const EXPERT_TIPS = {
 export default function ExpertTips({ section, data }: ExpertTipsProps) {
   const sectionTips = EXPERT_TIPS[section];
 
-  // Filter tips based on conditions
   const activeTips = sectionTips.tips.filter((tip) => {
     if (!tip.condition) return true;
     return tip.condition(data);
   });
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'critical':
-        return 'bg-red-900/50 border-red-500 text-red-300';
-      case 'high':
-        return 'bg-amber-900/30 border-amber-600 text-amber-300';
-      case 'medium':
-        return 'bg-blue-900/30 border-blue-600 text-blue-300';
-      default:
-        return 'bg-gray-800 border-gray-600 text-gray-300';
-    }
-  };
-
-  const getPriorityBadge = (priority: string) => {
-    switch (priority) {
-      case 'critical':
-        return 'CRITICAL';
-      case 'high':
-        return 'IMPORTANT';
-      case 'medium':
-        return 'NOTE';
-      default:
-        return 'TIP';
-    }
-  };
+  if (activeTips.length === 0) return null;
 
   return (
-    <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-xl">{sectionTips.icon}</span>
-        <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider">
-          {sectionTips.title}
-        </h3>
+    <div className="border-t pt-10">
+      <div className="text-xs uppercase tracking-[0.2em] text-gray-400 mb-6">
+        {sectionTips.title}
       </div>
-
-      <div className="space-y-3">
+      <div className="space-y-4">
         {activeTips.map((tip) => (
-          <div
-            key={tip.id}
-            className={`p-3 rounded-lg border ${getPriorityColor(tip.priority)}`}
-          >
-            <div className="flex items-start justify-between gap-2 mb-1">
-              <span className="text-xs font-bold">{tip.title}</span>
-              <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${
-                tip.priority === 'critical' ? 'bg-red-600 text-white' :
-                tip.priority === 'high' ? 'bg-amber-600 text-black' :
-                'bg-gray-600 text-white'
-              }`}>
-                {getPriorityBadge(tip.priority)}
-              </span>
+          <div key={tip.id} className="flex gap-4">
+            <div className={`w-1 flex-shrink-0 ${
+              tip.priority === 'critical' ? 'bg-red-600' :
+              tip.priority === 'high' ? 'bg-gray-400' : 'bg-gray-200'
+            }`} />
+            <div>
+              <div className="text-sm font-medium">{tip.title}</div>
+              <div className="text-sm text-gray-500 mt-1">{tip.content}</div>
             </div>
-            <p className="text-xs leading-relaxed opacity-90">
-              {tip.content}
-            </p>
           </div>
         ))}
       </div>
-
-      {activeTips.length === 0 && (
-        <div className="text-center text-gray-500 text-sm py-4">
-          No specific alerts for current data
-        </div>
-      )}
     </div>
   );
 }

@@ -1,14 +1,33 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { IBM_Plex_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const ibmPlex = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-body",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
-  title: "TIFORT - Forensic Real Estate Intelligence",
-  description: "Real estate data intelligence platform for Morocco",
+  title: "TIFORT",
+  description: "Private platform",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -18,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${ibmPlex.variable} ${playfair.variable} font-body antialiased`}>
         {children}
       </body>
     </html>
